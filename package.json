@@ -1,5 +1,5 @@
 {
-  "name": "@vulpemventures/token-sale-smart-contract",
+  "name": "token-sale-smart-contract",
   "version": "1.0.0",
   "description": "Token Sale smart contracts with Tiers, Soft Cap, Hard Cap, KYC Whitelist & Blacklist ",
   "main": "index.js",
