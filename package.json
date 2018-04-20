@@ -2,13 +2,18 @@
   "name": "token-sale-smart-contract",
   "version": "1.0.0",
   "description": "Token Sale smart contracts with Tiers, Soft Cap, Hard Cap, KYC Whitelist & Blacklist ",
-  "main": "index.js",
   "scripts": {
-    "test": "truffle test"
+    "deploy": "scripts/truffle-migrate",
+    "test": "node_modules/.bin/truffle test",
+    "flat": "scripts/contract-flattener",
+    "compile": "rm -rf build && node_modules/.bin/truffle compile"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vulpemventures/token-sale-smart-contract.git"
+  },
+  "engines": {
+    "node": ">=7.6"
   },
   "keywords": [
     "TokenSale",
@@ -19,15 +24,17 @@
     "Blacklist",
     "vulpem.com"
   ],
-  "author": "tiero",
+  "author": "Vulpem Ventures Team",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/vulpemventures/token-sale-smart-contract/issues"
   },
   "homepage": "https://github.com/vulpemventures/token-sale-smart-contract#readme",
   "dependencies": {
-    "truffle": "^4.1.5",
-    "zeppelin-solidity": "^1.8.0"
+    "truffle": "^4.1.6",
+    "truffle-flattener": "^1.2.5",
+    "truffle-hdwallet-provider": "0.0.3",
+    "zeppelin-solidity": "git://github.com/OpenZeppelin/zeppelin-solidity.git#master"
   },
   "devDependencies": {
     "chai": "^4.1.2",
