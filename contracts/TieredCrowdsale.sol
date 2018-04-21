@@ -85,11 +85,6 @@ contract TieredCrowdsale is Ownable, ReentrancyGuard {
         // derive amount in wei to buy 
         uint256 weiAmount = msg.value;
 
-        // if firstDayCap is set, check if contribution respects the 24hrs limit
-        // if (firstDayCap > 0 && getBlockTimestamp() <= firstDay) {
-        //     require((contribution[beneficiary].add(weiAmount)) <= firstDayCap);
-        // }
-
         uint256 remainingToFund = cap.sub(weiRaised);
 
         // check if there is enough funds 
