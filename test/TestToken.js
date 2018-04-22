@@ -3,31 +3,32 @@ const Token = artifacts.require('Token.sol')
 const assertFail = require('./helpers/assertFail.js')
 const { increaseTimeTo } = require('./helpers/increaseTime')
 const { latestTime, duration } = require('./helpers/latestTime')
+const { NAME, SYMBOL, DECIMALS, INITIAL_SUPPLY } = require('./helpers/constants')
 
 contract('Token', (accounts) => {
 
   beforeEach(async () => {
-    this.token = await Token.new({ from: accounts[0] })
+    try {
+      this.token = await Token.new(NAME, SYMBOL, DECIMALS, INITIAL_SUPPLY, { from: accounts[0] })    
+    } catch (e){
+      console.log(e)
+    }
   })
 
-  it('should have the name Token', async () => {
-    assert.equal(await this.token.name.call(), 'Token', "Token wasn't the name")
+  it('should have the name', async () => {
+    assert.equal(await this.token.name.call(), NAME, NAME + " wasn't the name")
   })
 
-  it('should have the symbol SYM', async () => {
-    assert.equal(await this.token.symbol.call(), 'SYM', "SYM wasn't the symbol")
+  it('should have the symbol', async () => {
+    assert.equal(await this.token.symbol.call(), SYMBOL, SYMBOL + " wasn't the symbol")
   })
 
-  it('should have decimals set to 8', async () => {
-    assert.equal(await this.token.decimals.call(), 8, "8 wasn't the value of decimals")
+  it('should have decimals ', async () => {
+    assert.equal(await this.token.decimals.call(), DECIMALS, DECIMALS + " wasn't the value of decimals")
   })
 
-  it('should have INITIAL_SUPPLY set to 1 bilion dxt', async () => {
-    assert.equal(await this.token.INITIAL_SUPPLY.call(), 1000000000 * (10**8), "1e17 wasn't the value of INITIAL_SUPPLY units")
-  })
-
-  it('should set totalSupply to 1 bilion dxt', async () => {
-    assert.equal(await this.token.totalSupply.call(), 1000000000 * (10**8), "1e17 wasn't the value of totalSupply units")
+  it('should set totalSupply ', async () => {
+    assert.equal(await this.token.totalSupply.call(), INITIAL_SUPPLY * (10**DECIMALS), " wrong totalSupply units")
   })
 
 

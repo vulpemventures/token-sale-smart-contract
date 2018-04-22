@@ -9,7 +9,7 @@ contract FirstDayCappedCrowdsale is TieredCrowdsale {
     uint256 public firstDayCap;
     uint256 public firstDay;
 
-    function FirstDayCappedCrowdsale(
+    constructor(
         address _token, 
         address _wallet,
         uint256 _startTime,

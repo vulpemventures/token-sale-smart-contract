@@ -1,9 +1,12 @@
 const Crowdsale = artifacts.require('TieredCrowdsale.sol')
 const Token = artifacts.require('Token.sol')
-const Vault = artifacts.require('RefundVault.sol')
-const PUBLIC_SUPPLY = new web3.BigNumber(150000000 *  Math.pow(10, 8))
 
-const { latestTime, duration } = require('./helpers/latestTime')
+const { NAME, SYMBOL, DECIMALS, INITIAL_SUPPLY, duration } = require('./helpers/constants')
+const PUBLIC_SUPPLY = new web3.BigNumber((INITIAL_SUPPLY/2) * Math.pow(10, 8))
+
+const Vault = artifacts.require('RefundVault.sol')
+
+const { latestTime } = require('./helpers/latestTime')
 const { increaseTimeTo } = require('./helpers/increaseTime')
 
 require('chai')
@@ -13,8 +16,11 @@ require('chai')
 contract('Tier Crowdsale', async ([miner, firstContributor, secondContributor, whitelisted, blacklisted, wallet]) => {
 
   beforeEach(async () => {
-    this.token = await Token.new({ from: miner })
-
+    try {
+      this.token = await Token.new(NAME, SYMBOL, DECIMALS, INITIAL_SUPPLY, { from: miner })    
+    } catch (e){
+      console.log(e)
+    }
     const startTime = latestTime() + duration.hours(10)
     const endTime = startTime + duration.weeks(1)
     const goal = new web3.BigNumber(3 * Math.pow(10, 18))
@@ -33,9 +39,10 @@ contract('Tier Crowdsale', async ([miner, firstContributor, secondContributor, w
     ]
 
     this.crowdsale = await Crowdsale.new(this.token.address, wallet, startTime, endTime, rates, durations, cap, goal, { from: miner })
-
-    await this.token.transfer(this.crowdsale.address, PUBLIC_SUPPLY, { from: miner })
+    
     await this.token.pause({ from: miner })
+    await this.token.transfer(this.crowdsale.address, PUBLIC_SUPPLY, { from: miner })
+    
     await this.token.transferOwnership(this.crowdsale.address, { from: miner })
     await this.crowdsale.updateWhitelist([firstContributor, secondContributor], true, { from: miner })
   })
@@ -116,8 +123,8 @@ contract('Tier Crowdsale', async ([miner, firstContributor, secondContributor, w
     })
 
     it('check the balances just after deploy and after crowdsale initialization', async () => {
-      assert.equal((await this.token.balanceOf(miner)).toNumber(), 850000000 * 10**8, "The miner should hold 850mil")
-      assert.equal((await this.token.balanceOf(this.crowdsale.address)).toNumber(), 150000000 * 10**8, "The Crowdsale should hold 150mil")
+      assert.equal((await this.token.balanceOf(miner)).toNumber(), PUBLIC_SUPPLY, "The miner should hold presale ")
+      assert.equal((await this.token.balanceOf(this.crowdsale.address)).toNumber(), PUBLIC_SUPPLY, "The Crowdsale should hold the rest")
     })
 
     it('only the owner should be able to change the rate', async () => {
@@ -206,7 +213,7 @@ contract('Tier Crowdsale', async ([miner, firstContributor, secondContributor, w
       const thirdTier = await this.crowdsale.rates(2)
       const standardRate = await this.crowdsale.rates(3)
 
-      const initialSupply = await this.token.INITIAL_SUPPLY()
+      const initialSupply = INITIAL_SUPPLY
       const startTime = await this.crowdsale.startTime()
       const endTime = await this.crowdsale.endTime()
 

@@ -21,18 +21,20 @@ import "zeppelin-solidity/contracts/token/ERC20/BurnableToken.sol";
  */
 contract Token is PausableToken, BurnableToken {
 
-    string public constant name = "Token";
-    string public constant symbol = "SYM";
-    uint8 public constant decimals = 8;
-    uint256 public constant INITIAL_SUPPLY = 1000000000 * 10**uint256(decimals);
+    string public name;
+    string public symbol;
+    uint8  public decimals;
     
     /**
     * @dev Token Constructor
     */
 
-    function Token() public {
-        totalSupply_ = INITIAL_SUPPLY;   
-        balances[msg.sender] = INITIAL_SUPPLY;
+    function Token(string _name, string _symbol, uint8 _decimals, uint256 _initialSupply) public {
+        name = _name;
+        symbol = _symbol;
+        decimals = _decimals;
+        totalSupply_ = _initialSupply * 10**uint256(decimals); 
+        balances[msg.sender] = totalSupply_;
     }
 
     // funds sent to this contract will be given back

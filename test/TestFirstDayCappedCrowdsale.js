@@ -1,9 +1,12 @@
 const Crowdsale = artifacts.require('FirstDayCappedCrowdsale.sol')
 const Token = artifacts.require('Token.sol')
 const Vault = artifacts.require('RefundVault.sol')
-const PUBLIC_SUPPLY = new web3.BigNumber(150000000 *  Math.pow(10, 8))
 
-const { latestTime, duration } = require('./helpers/latestTime')
+const { NAME, SYMBOL, DECIMALS, INITIAL_SUPPLY, duration } = require('./helpers/constants')
+const PUBLIC_SUPPLY = new web3.BigNumber((INITIAL_SUPPLY/2) * Math.pow(10, 8))
+
+
+const { latestTime } = require('./helpers/latestTime')
 const { increaseTimeTo } = require('./helpers/increaseTime')
 
 require('chai')
@@ -13,7 +16,12 @@ require('chai')
 contract('First Day Capped Crowdsale', async ([miner, firstContributor, secondContributor, whitelisted, blacklisted, wallet]) => {
 
   beforeEach(async () => {
-    this.token = await Token.new({ from: miner })
+
+    try {
+      this.token = await Token.new(NAME, SYMBOL, DECIMALS, INITIAL_SUPPLY, { from: miner })    
+    } catch (e){
+      console.log(e)
+    }
     
     const startTime = latestTime() + duration.hours(10)
     const endTime = startTime + duration.weeks(1)
@@ -93,8 +101,8 @@ contract('First Day Capped Crowdsale', async ([miner, firstContributor, secondCo
     })
 
     it('check the balances just after deploy and after crowdsale initialization', async () => {
-      assert.equal((await this.token.balanceOf(miner)).toNumber(), 850000000 * 10**8, "The miner should hold 850mil")
-      assert.equal((await this.token.balanceOf(this.crowdsale.address)).toNumber(), 150000000 * 10**8, "The Crowdsale should hold 150mil")
+      assert.equal((await this.token.balanceOf(miner)).toNumber(),(INITIAL_SUPPLY/2) * 10**8, "The miner should hold the presale")
+      assert.equal((await this.token.balanceOf(this.crowdsale.address)).toNumber(), (INITIAL_SUPPLY/2) * 10**8, "The Crowdsale should hold the rest")
     })
 
     it('only the owner should be able to change the rate', async () => {
@@ -184,11 +192,11 @@ contract('First Day Capped Crowdsale', async ([miner, firstContributor, secondCo
 
       await this.crowdsale.sendTransaction({ value: new web3.BigNumber(web3.toWei(6, 'ether')), from: firstContributor })
 
-      const initialSupply = await this.token.INITIAL_SUPPLY()
+      const initialSupply = INITIAL_SUPPLY * (10**DECIMALS)
       const contributorAmount = await this.token.balanceOf(firstContributor)
 
-      assert.equal(contributorAmount.toNumber(), expectedCotributorAmount.toNumber())
-      assert.equal(initialSupply.toNumber() - contributorAmount.toNumber(), initialSupply.toNumber() - expectedCotributorAmount.toNumber())
+      assert.equal(Number(contributorAmount), Number(expectedCotributorAmount))
+      assert.equal(Number(initialSupply) - Number(contributorAmount), Number(initialSupply) - Number(expectedCotributorAmount))
 
       try {
         await this.token.transfer(secondContributor, new web3.BigNumber(100))
