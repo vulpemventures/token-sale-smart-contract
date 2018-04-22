@@ -3,22 +3,6 @@ pragma solidity ^0.4.21;
 import "zeppelin-solidity/contracts/token/ERC20/PausableToken.sol";
 import "zeppelin-solidity/contracts/token/ERC20/BurnableToken.sol";
 
- /**
- * @title ERC20 Token
- * @dev ERC20 Token (SYM)
- *
- * SYM Tokens are divisible by 1e8 (100,000,000) base
- *
- * SYM are displayed using 8 decimal places of precision.
- *
- * 1 SYM is equivalent to:
- *   100 000 000 == 1 * 10**8 == 1e8 == One Hundred Million units
- *
- * 1 Billion SYM (total supply) is equivalent to:
- *   100000000000000000 == 1000000000 * 10**8 == 1e17 == One Hundred Quadrillion units
- *
- *
- */
 contract Token is PausableToken, BurnableToken {
 
     string public name;
