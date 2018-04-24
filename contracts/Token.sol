@@ -43,15 +43,10 @@ contract Token is PausableToken, BurnableToken {
     }
 
     function flush(address beneficiary) public onlyOwner returns (bool) {
-        uint256 balance = balances[this];
+        uint256 amount = balances[this];
 
-        require(balance > 0);
+        require(amount > 0);
 
-        balances[this] = balances[this].sub(balance);
-        balances[beneficiary] = balances[beneficiary].add(balance);
-
-        emit Transfer(this, beneficiary, balance);
-
-        return true;
+        this.transfer(beneficiary, amount);
     }
 }
