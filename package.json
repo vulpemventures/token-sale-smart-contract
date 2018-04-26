@@ -34,6 +34,7 @@
     "truffle": "^4.1.6",
     "truffle-flattener": "^1.2.5",
     "truffle-hdwallet-provider": "0.0.3",
+    "web3": "^1.0.0-beta.34",
     "zeppelin-solidity": "git://github.com/OpenZeppelin/zeppelin-solidity.git#master"
   },
   "devDependencies": {
