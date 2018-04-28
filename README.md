@@ -18,6 +18,19 @@ Token Sale smart contracts with Tiers, Soft Cap, Hard Cap, KYC Whitelist &amp; B
 * [SingularityNET - AGI](https://singularitynet.io)
 * [DataWallet - DXT](https://datawallet.com)
 
+# Workflow
+
+1) Deploy Token contract with `name`, `symbol`, `decimals`, `initialSupply`
+2) Deploy Crowdsale contract of choice
+3) Call `transfer` inside Token with Crowdsale as recipient 
+4) Call `pause` inside Token
+5) Call `transferOwnership` inside Token contract with Crowdsale as new owner
+6) Call `updateWhitelist` inside Crowdsale Contract
+
+After the sale
+
+7) Call `finalize` inside Crowdsale Contract
+
 # Usage
 
 Install 
