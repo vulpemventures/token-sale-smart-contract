@@ -44,7 +44,7 @@ contract TieredCrowdsale is Ownable, ReentrancyGuard {
     event Finalized();
     
 
-    function TieredCrowdsale(
+    constructor(
         address _token, 
         address _wallet,
         uint256 _startTime,

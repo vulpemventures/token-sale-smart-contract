@@ -13,7 +13,7 @@ contract Token is PausableToken, BurnableToken {
     * @dev Token Constructor
     */
 
-    function Token(string _name, string _symbol, uint8 _decimals, uint256 _initialSupply) public {
+    constructor(string _name, string _symbol, uint8 _decimals, uint256 _initialSupply) public {
         name = _name;
         symbol = _symbol;
         decimals = _decimals;
