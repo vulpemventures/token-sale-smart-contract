@@ -18,27 +18,56 @@ Token Sale smart contracts with Tiers, Soft Cap, Hard Cap, KYC Whitelist &amp; B
 * [SingularityNET - AGI](https://singularitynet.io)
 * [DataWallet - DXT](https://datawallet.com)
 
-## Requirements
+# Usage
+
+Install 
+
+```javascript
+npm install https://github.com/vulpemventures/token-sale-smart-contract
+```
+
+Require it
+
+```javascript
+
+const CompiledTokenContract = require("token-sale-smart-contract/build/contracts/Token.json")
+
+```
+
+Use it
+
+```javascript
+
+const { abi, bytecode } = CompiledTokenContract
+
+const contractInstance = web3.eth.Contract(abi)
+...
+
+```
+
+# Development
+
+### Requirements
 
 * Node/npm > 7.6
 
-## Install
+### Install
 
 `npm i`
 
-## Run tests
+### Run tests
 
 `npm run test`
 
-## Compile contracts 
+### Compile contracts 
 
 `npm run compile`
 
-## Deploy to public networks
+### Deploy to public networks
 
 `npm run deploy`
 
-## Flatten
+### Flatten
 
 `npm run flat`
 
