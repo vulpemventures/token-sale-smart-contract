@@ -1,7 +1,7 @@
 pragma solidity ^0.4.21;
 
-import "zeppelin-solidity/contracts/token/ERC20/PausableToken.sol";
-import "zeppelin-solidity/contracts/token/ERC20/BurnableToken.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/PausableToken.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/BurnableToken.sol";
 
 contract Token is PausableToken, BurnableToken {
 

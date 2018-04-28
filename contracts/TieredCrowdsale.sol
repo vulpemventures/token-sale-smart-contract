@@ -1,10 +1,10 @@
 pragma solidity ^0.4.21;
 
 import "./Token.sol";
-import "zeppelin-solidity/contracts/math/SafeMath.sol";
-import "zeppelin-solidity/contracts/ReentrancyGuard.sol";
-import "zeppelin-solidity/contracts/ownership/Ownable.sol";
-import "zeppelin-solidity/contracts/crowdsale/distribution/utils/RefundVault.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "openzeppelin-solidity/contracts/ReentrancyGuard.sol";
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "openzeppelin-solidity/contracts/crowdsale/distribution/utils/RefundVault.sol";
 
 /**
  * @title SampleCrowdsale

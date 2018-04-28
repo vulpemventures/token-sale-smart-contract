@@ -6,7 +6,7 @@
     "deploy": "scripts/truffle-migrate",
     "test": "node_modules/.bin/truffle test",
     "flat": "scripts/contract-flattener",
-    "compile": "rm -rf build && node_modules/.bin/truffle compile"
+    "compile": "scripts/truffle-compile"
   },
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "truffle-flattener": "^1.2.5",
     "truffle-hdwallet-provider": "0.0.3",
     "web3": "^1.0.0-beta.34",
-    "zeppelin-solidity": "git://github.com/OpenZeppelin/zeppelin-solidity.git#master"
+    "openzeppelin-solidity": "^1.9.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
