@@ -20,8 +20,8 @@ Token Sale smart contracts with Tiers, Soft Cap, Hard Cap, KYC Whitelist &amp; B
 
 # Workflow
 
-1) Deploy Token contract with `name`, `symbol`, `decimals`, `initialSupply`
-2) Deploy Crowdsale contract of choice
+1) Deploy `Token` contract with `name`, `symbol`, `decimals`, `initialSupply`
+2) Deploy Crowdsale contract of choice (`FirstDayCappedCrowdsale` or `TieredCrowdsale`)
 3) Call `transfer` inside Token with Crowdsale as recipient 
 4) Call `pause` inside Token
 5) Call `transferOwnership` inside Token contract with Crowdsale as new owner
